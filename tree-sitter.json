@@ -1,0 +1,42 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "el2",
+      "camelcase": "El2",
+      "title": "el2",
+      "scope": "source.el2",
+      "file-types": [
+        "eli",
+        "el2"
+      ],
+      "injection-regex": "^el2$",
+      "class-name": "TreeSitterEl2"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "el2",
+    "authors": [
+      {
+        "name": "evan",
+        "url": ""
+      }
+    ],
+    "links": {
+      "repository": "evan-a-w/tree-sitter-el2",
+      "funding": ""
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "java": false,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}
