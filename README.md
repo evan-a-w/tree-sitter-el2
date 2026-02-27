@@ -27,6 +27,7 @@ Using
 - Install the Tree-sitter CLI, then from this directory run:
   - `tree-sitter generate`
   - `tree-sitter test` (runs files in `corpus/`)
+     - $ XDG_CACHE_HOME=/tmp tree-sitter generate && XDG_CACHE_HOME=/tmp tree-sitter test && XDG_CACHE_HOME=/tmp ./test/error-corpus/verify-errors.sh
   - `tree-sitter parse path/to/file.el2`
 
 License: MIT
