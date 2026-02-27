@@ -1,0 +1,1 @@
+let bad3(): i32 = match x with | A -> 1 | B( -> 2;

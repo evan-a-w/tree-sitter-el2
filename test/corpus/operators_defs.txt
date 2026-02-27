@@ -1,0 +1,97 @@
+==================
+operator_definitions_and_usage
+==================
+module Int32 = struct
+  let (+)(a: i32, b: i32): i32 = i32_add(a, b);
+  let (==)(a: i32, b: i32): bool = i32_equal(a, b);
+end;
+
+let z(): i32 = (+)(1, 2);
+let eq3(): bool = Int32.(+)(1, 2) == 3;
+let sc(): i32 = Int32.( (+) (1, 2) );
+---
+
+(source_file
+  (module_decl
+    name: (uidentifier)
+    modexpr: (module_expr
+      (let_decl
+        name: (operator_name
+          (operator_identifier))
+        parameters: (parameters
+          (param
+            (identifier)
+            (type_path
+              (identifier)))
+          (param
+            (identifier)
+            (type_path
+              (identifier))))
+        type: (type_path
+          (identifier))
+        value: (call_expression
+          function: (identifier)
+          (identifier)
+          (identifier)))
+      (let_decl
+        name: (operator_name
+          (operator_identifier))
+        parameters: (parameters
+          (param
+            (identifier)
+            (type_path
+              (identifier)))
+          (param
+            (identifier)
+            (type_path
+              (identifier))))
+        type: (type_path
+          (identifier))
+        value: (call_expression
+          function: (identifier)
+          (identifier)
+          (identifier)))))
+  (let_decl
+    name: (identifier)
+    parameters: (parameters)
+    type: (type_path
+      (identifier))
+    value: (call_expression
+      function: (operator_name
+        (operator_identifier))
+      (literal
+        (integer))
+      (literal
+        (integer))))
+  (let_decl
+    name: (identifier)
+    parameters: (parameters)
+    type: (type_path
+      (identifier))
+    value: (binary_expression
+      (call_expression
+        function: (scoped_open_expression
+          (module_path
+            (uidentifier))
+          (operator_identifier))
+        (literal
+          (integer))
+        (literal
+          (integer)))
+      (literal
+        (integer))))
+  (let_decl
+    name: (identifier)
+    parameters: (parameters)
+    type: (type_path
+      (identifier))
+    value: (scoped_open_expression
+      (module_path
+        (uidentifier))
+      (call_expression
+        function: (operator_name
+          (operator_identifier))
+        (literal
+          (integer))
+        (literal
+          (integer))))))

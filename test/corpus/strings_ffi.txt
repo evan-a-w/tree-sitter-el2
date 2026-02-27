@@ -1,0 +1,32 @@
+==================
+strings_and_extern
+==================
+extern "C" let puts(s: *u8): i32;
+let main(): i32 = { puts("hi\0"); 0 };
+---
+
+(source_file
+  (extern_decl
+    abi: (string)
+    name: (identifier)
+    parameters: (parameters
+      (param
+        (identifier)
+        (pointer_type
+          type: (type_path
+            (identifier)))))
+    type: (type_path
+      (identifier)))
+  (let_decl
+    name: (identifier)
+    parameters: (parameters)
+    type: (type_path
+      (identifier))
+    value: (block
+      (statement
+        (call_expression
+          function: (identifier)
+          (literal
+            (string))))
+      (literal
+        (integer)))))

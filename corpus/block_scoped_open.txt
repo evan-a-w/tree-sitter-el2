@@ -1,0 +1,10 @@
+=== let_open_in_block ===
+let use(): i32 = {
+  let open M;
+  f(1)
+};
+---
+(source_file
+  (let_decl name: (identifier) (parameters) ":" (type (identifier)) value: (block (let_open_decl (uidentifier)) (call_expression function: (identifier) (integer))))
+)
+

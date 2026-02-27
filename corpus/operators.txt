@@ -1,0 +1,10 @@
+=== boolean_and_arith_precedence ===
+let f(a: bool, b: bool, c: bool): bool = !a && b || c;
+let g(x: i32, y: i32, z: i32): i32 = x + y * z;
+let h(x: i32, y: i32): bool = x == y;
+---
+(source_file
+  (let_decl name: (identifier) (parameters (param (identifier) ":" (type (identifier))) (param (identifier) ":" (type (identifier))) (param (identifier) ":" (type (identifier)))) ":" (type (identifier)) value: (binary_expression (unary_expression (identifier)) (binary_expression (identifier) (identifier))))
+  (let_decl name: (identifier) (parameters (param (identifier) ":" (type (identifier))) (param (identifier) ":" (type (identifier))) (param (identifier) ":" (type (identifier)))) ":" (type (identifier)) value: (binary_expression (identifier) (binary_expression (identifier) (identifier))))
+  (let_decl name: (identifier) (parameters (param (identifier) ":" (type (identifier))) (param (identifier) ":" (type (identifier)))) ":" (type (identifier)) value: (binary_expression (identifier) (identifier))))
+

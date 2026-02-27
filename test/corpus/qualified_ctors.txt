@@ -1,0 +1,106 @@
+==================
+qualified_constructors_in_exprs_and_patterns
+==================
+module Ast = struct
+  type t = A | B(i32) | C { x: i32 };
+end;
+
+let use1(): Ast.t = Ast.A;
+let use2(): Ast.t = Ast.B(1);
+let use3(): Ast.t = Ast.C { x = 2 };
+
+let matchq(a: Ast.t): i32 = match a with
+  | Ast.A -> 0
+  | Ast.B(n) -> n
+  | Ast.C { x } -> x;
+---
+
+(source_file
+  (module_decl
+    name: (uidentifier)
+    modexpr: (module_expr
+      (type_decl
+        name: (identifier)
+        body: (variant_type
+          (ctor_decl
+            (uidentifier))
+          (ctor_decl
+            (uidentifier)
+            (type_path
+              (identifier)))
+          (ctor_decl
+            (uidentifier)
+            (record_type
+              (field_type
+                (identifier)
+                (type_path
+                  (identifier)))))))))
+  (let_decl
+    name: (identifier)
+    parameters: (parameters)
+    type: (type_path
+      (uidentifier)
+      (identifier))
+    value: (constructor_expression
+      (qualified_uidentifier
+        (uidentifier)
+        (uidentifier))))
+  (let_decl
+    name: (identifier)
+    parameters: (parameters)
+    type: (type_path
+      (uidentifier)
+      (identifier))
+    value: (constructor_expression
+      (qualified_uidentifier
+        (uidentifier)
+        (uidentifier))
+      (literal
+        (integer))))
+  (let_decl
+    name: (identifier)
+    parameters: (parameters)
+    type: (type_path
+      (uidentifier)
+      (identifier))
+    value: (constructor_expression
+      (qualified_uidentifier
+        (uidentifier)
+        (uidentifier))
+      (record_literal
+        (field_init
+          (identifier)
+          (literal
+            (integer))))))
+  (let_decl
+    name: (identifier)
+    parameters: (parameters
+      (param
+        (identifier)
+        (type_path
+          (uidentifier)
+          (identifier))))
+    type: (type_path
+      (identifier))
+    value: (match_expression
+      scrutinee: (identifier)
+      pattern: (constructor_pattern
+        (qualified_uidentifier
+          (uidentifier)
+          (uidentifier)))
+      body: (literal
+        (integer))
+      pattern: (constructor_pattern
+        (qualified_uidentifier
+          (uidentifier)
+          (uidentifier))
+        (identifier))
+      body: (identifier)
+      pattern: (constructor_pattern
+        (qualified_uidentifier
+          (uidentifier)
+          (uidentifier))
+        (record_pattern
+          (pat_field
+            (identifier))))
+      body: (identifier))))

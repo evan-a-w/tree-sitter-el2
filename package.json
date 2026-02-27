@@ -1,0 +1,19 @@
+{
+  "name": "tree-sitter-el2",
+  "version": "0.1.0",
+  "description": "Tree-sitter grammar for the el2 language",
+  "main": "grammar.js",
+  "author": "",
+  "license": "MIT",
+  "keywords": [
+    "tree-sitter",
+    "parser",
+    "el2"
+  ],
+  "engines": {
+    "node": ">=12"
+  },
+  "dependencies": {
+    "tree-sitter-cli": "^0.26.6"
+  }
+}

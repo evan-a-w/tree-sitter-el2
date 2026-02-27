@@ -1,0 +1,7 @@
+=== unsafe_block_and_pointer_arith ===
+let zap(p: *i32): unit = unsafe { *ptr_add[i32](p, 1) := 0; };
+---
+(source_file
+  (let_decl name: (identifier) (parameters (param (identifier) ":" (type (pointer_type (type (identifier)))))) ":" (type (identifier)) value: (unsafe_block (block (assign_stmt (unary_expression (call_expression function: (identifier (type_arguments (type (identifier)))) (identifier) (integer))) (integer)))))
+)
+

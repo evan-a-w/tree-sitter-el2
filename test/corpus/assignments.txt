@@ -1,0 +1,57 @@
+==================
+assignments_and_lvalues
+==================
+let mutate(p: *point, q: *i32): i32 = {
+  var x: i32 = 0;
+  x := 1;
+  *q := x;
+  (*p).x := 2;
+  x
+};
+---
+
+(source_file
+  (let_decl
+    (identifier)
+    (parameters
+      (param
+        (identifier)
+        (pointer_type
+          (type_path
+            (identifier))))
+      (param
+        (identifier)
+        (pointer_type
+          (type_path
+            (identifier)))))
+    (type_path
+      (identifier))
+    (block
+      (statement
+        (identifier)
+        (type_path
+          (identifier))
+        (literal
+          (integer)))
+      (statement
+        (assign_stmt
+          (lvalue
+            (identifier))
+          (literal
+            (integer))))
+      (statement
+        (assign_stmt
+          (lvalue
+            (identifier))
+          (identifier)))
+      (statement
+        (assign_stmt
+          (lvalue
+            (field_expression
+              (parenthesized_expression
+                (unary_expression
+                  (identifier)))
+              (identifier)))
+          (literal
+            (integer))))
+      (identifier))))

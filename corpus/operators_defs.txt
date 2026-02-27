@@ -1,0 +1,18 @@
+=== operator_definitions_and_usage ===
+module Int32 = struct
+  let (+)(a: i32, b: i32): i32 = i32_add(a, b);
+  let (==)(a: i32, b: i32): bool = i32_equal(a, b);
+end;
+
+let z(): i32 = (+)(1, 2);
+let eq3(): bool = Int32.(+)(1, 2) == 3;
+let sc(): i32 = Int32.( (+) (1, 2) );
+---
+(source_file
+  (module_decl name: (uidentifier) modexpr: (module_expr
+    (let_decl name: (operator_name (operator_identifier)) (parameters (param (identifier) ":" (type (identifier))) (param (identifier) ":" (type (identifier)))) ":" (type (identifier)) value: (call_expression function: (identifier) (identifier) (identifier)))
+    (let_decl name: (operator_name (operator_identifier)) (parameters (param (identifier) ":" (type (identifier))) (param (identifier) ":" (type (identifier)))) ":" (type (identifier)) value: (call_expression function: (identifier) (identifier) (identifier)))))
+  (let_decl name: (identifier) (parameters) ":" (type (identifier)) value: (call_expression function: (operator_name (operator_identifier)) (integer) (integer)))
+  (let_decl name: (identifier) (parameters) ":" (type (identifier)) value: (binary_expression (scoped_open_expression (call_expression function: (operator_name (operator_identifier)) (integer) (integer))) (integer)))
+  (let_decl name: (identifier) (parameters) ":" (type (identifier)) value: (scoped_open_expression (call_expression function: (operator_name (operator_identifier)) (integer) (integer)))))
+

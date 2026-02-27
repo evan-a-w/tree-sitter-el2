@@ -1,0 +1,118 @@
+==================
+interface_like_sig_usage
+==================
+module type COUNTER = sig
+  type t
+  let make(): t
+  let inc(c: *t): unit
+  let get(c: *t): i64
+end;
+
+module Counter: COUNTER = struct
+  type t = { value: i64 };
+  let make(): t = { value = 0 };
+  let inc(c: *t): unit = { (*c).value := i64_add((*c).value, 1); };
+  let get(c: *t): i64 = (*c).value;
+end;
+---
+
+(source_file
+  (module_type_decl
+    name: (uidentifier)
+    (sig_item
+      (type_sig
+        (identifier)))
+    (sig_item
+      (let_sig
+        (identifier)
+        (parameters)
+        (type_path
+          (identifier))))
+    (sig_item
+      (let_sig
+        (identifier)
+        (parameters
+          (param
+            (identifier)
+            (pointer_type
+              type: (type_path
+                (identifier)))))
+        (type_path
+          (identifier))))
+    (sig_item
+      (let_sig
+        (identifier)
+        (parameters
+          (param
+            (identifier)
+            (pointer_type
+              type: (type_path
+                (identifier)))))
+        (type_path
+          (identifier)))))
+  (module_decl
+    name: (uidentifier)
+    sig: (modtype
+      (module_path
+        (uidentifier)))
+    modexpr: (module_expr
+      (type_decl
+        name: (identifier)
+        body: (record_type
+          (field_type
+            (identifier)
+            (type_path
+              (identifier)))))
+      (let_decl
+        name: (identifier)
+        parameters: (parameters)
+        type: (type_path
+          (identifier))
+        value: (record_literal
+          (field_init
+            (identifier)
+            (literal
+              (integer)))))
+      (let_decl
+        name: (identifier)
+        parameters: (parameters
+          (param
+            (identifier)
+            (pointer_type
+              type: (type_path
+                (identifier)))))
+        type: (type_path
+          (identifier))
+        value: (block
+          (statement
+            (assign_stmt
+              (lvalue
+                (field_expression
+                  object: (parenthesized_expression
+                    (unary_expression
+                      (identifier)))
+                  field: (identifier)))
+              (call_expression
+                function: (identifier)
+                (field_expression
+                  object: (parenthesized_expression
+                    (unary_expression
+                      (identifier)))
+                  field: (identifier))
+                (literal
+                  (integer)))))))
+      (let_decl
+        name: (identifier)
+        parameters: (parameters
+          (param
+            (identifier)
+            (pointer_type
+              type: (type_path
+                (identifier)))))
+        type: (type_path
+          (identifier))
+        value: (field_expression
+          object: (parenthesized_expression
+            (unary_expression
+              (identifier)))
+          field: (identifier))))))

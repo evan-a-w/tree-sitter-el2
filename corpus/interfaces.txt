@@ -1,0 +1,28 @@
+=== interface_like_sig_usage ===
+module type COUNTER = sig
+  type t
+  let make(): t
+  let inc(c: *t): unit
+  let get(c: *t): i64
+end;
+
+module Counter: COUNTER = struct
+  type t = { value: i64 };
+  let make(): t = { value = 0 };
+  let inc(c: *t): unit = { (*c).value := i64_add((*c).value, 1); };
+  let get(c: *t): i64 = (*c).value;
+end;
+---
+(source_file
+  (module_type_decl name: (uidentifier)
+    (type_sig (identifier))
+    (let_sig (identifier) (parameters) ":" (type (identifier)))
+    (let_sig (identifier) (parameters (param (identifier) ":" (type (pointer_type (type (identifier)))))) ":" (type (identifier)))
+    (let_sig (identifier) (parameters (param (identifier) ":" (type (pointer_type (type (identifier)))))) ":" (type (identifier))))
+  (module_decl name: (uidentifier) sig: (uidentifier) modexpr: (module_expr
+    (type_decl name: (identifier) body: (record_type (field_type (identifier) (type (identifier)))))
+    (let_decl name: (identifier) (parameters) ":" (type (identifier)) value: (record_literal (field_init (identifier) (integer))))
+    (let_decl name: (identifier) (parameters (param (identifier) ":" (type (pointer_type (type (identifier)))))) ":" (type (identifier)) value: (block (assign_stmt (field_expression (parenthesized_expression (unary_expression (identifier))) (identifier)) (call_expression function: (identifier) (field_expression (parenthesized_expression (unary_expression (identifier))) (identifier)) (integer)))))
+    (let_decl name: (identifier) (parameters (param (identifier) ":" (type (pointer_type (type (identifier)))))) ":" (type (identifier)) value: (field_expression (parenthesized_expression (unary_expression (identifier))) (identifier)))))
+)
+

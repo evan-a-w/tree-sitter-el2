@@ -1,0 +1,32 @@
+==================
+unsafe_block_and_pointer_arith
+==================
+let zap(p: *i32): unit = unsafe { *ptr_add[i32](p, 1) := 0; };
+---
+
+(source_file
+  (let_decl
+    name: (identifier)
+    parameters: (parameters
+      (param
+        (identifier)
+        (pointer_type
+          type: (type_path
+            (identifier)))))
+    type: (type_path
+      (identifier))
+    value: (unsafe_block
+      (block
+        (statement
+          (assign_stmt
+            (lvalue
+              (call_expression
+                function: (identifier)
+                (type_arguments
+                  (type_path
+                    (identifier)))
+                (identifier)
+                (literal
+                  (integer))))
+            (literal
+              (integer))))))))

@@ -1,0 +1,36 @@
+==================
+type_paths_and_applications
+==================
+module X = struct type t = i32; end;
+let use(x: X.t): X.t = x;
+type opti32 = option[i32];
+---
+
+(source_file
+  (module_decl
+    name: (uidentifier)
+    modexpr: (module_expr
+      (type_decl
+        name: (identifier)
+        body: (type_path
+          (identifier)))))
+  (let_decl
+    name: (identifier)
+    parameters: (parameters
+      (param
+        (identifier)
+        (type_path
+          (uidentifier)
+          (identifier))))
+    type: (type_path
+      (uidentifier)
+      (identifier))
+    value: (identifier))
+  (type_decl
+    name: (identifier)
+    body: (type_path
+      (type_application
+        head: (identifier)
+        targs: (type_arguments
+          (type_path
+            (identifier)))))))

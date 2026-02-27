@@ -1,0 +1,86 @@
+==================
+patterns_tuple_record_variant_wildcard
+==================
+type pair[a, b] = Pair(a, b);
+type expr = Lit(i32) | Add { lhs: i32; rhs: i32 };
+let use_pair(p: pair[i32, bool]): i32 = match p with | Pair(x, _) -> x;
+let use_record(e: expr): i32 = match e with | Add { lhs; rhs = r } -> i32_add(lhs, r) | _ -> 0;
+---
+
+(source_file
+  (type_decl
+    name: (identifier)
+    (type_params
+      (identifier)
+      (identifier))
+    body: (variant_type
+      (ctor_decl
+        (uidentifier)
+        (type_path
+          (identifier))
+        (type_path
+          (identifier)))))
+  (type_decl
+    name: (identifier)
+    body: (variant_type
+      (ctor_decl
+        (uidentifier)
+        (type_path
+          (identifier)))
+      (ctor_decl
+        (uidentifier)
+        (record_type
+          (field_type
+            (identifier)
+            (type_path
+              (identifier)))
+          (field_type
+            (identifier)
+            (type_path
+              (identifier)))))))
+  (let_decl
+    name: (identifier)
+    parameters: (parameters
+      (param
+        (identifier)
+        (type_path
+          (type_application
+            head: (identifier)
+            targs: (type_arguments
+              (type_path
+                (identifier))
+              (type_path
+                (identifier)))))))
+    type: (type_path
+      (identifier))
+    value: (match_expression
+      scrutinee: (identifier)
+      pattern: (constructor_pattern
+        (uidentifier)
+        (identifier))
+      body: (identifier)))
+  (let_decl
+    name: (identifier)
+    parameters: (parameters
+      (param
+        (identifier)
+        (type_path
+          (identifier))))
+    type: (type_path
+      (identifier))
+    value: (match_expression
+      scrutinee: (identifier)
+      pattern: (constructor_pattern
+        (uidentifier)
+        (record_pattern
+          (pat_field
+            (identifier))
+          (pat_field
+            (identifier)
+            (identifier))))
+      body: (call_expression
+        function: (identifier)
+        (identifier)
+        (identifier))
+      body: (literal
+        (integer)))))

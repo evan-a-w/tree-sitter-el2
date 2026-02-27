@@ -1,0 +1,67 @@
+==================
+opens_let_var_type_extern
+==================
+open M;
+let id[a](x: a): a = x;
+var n: i32 = 0;
+type option[a] = None | Some(a);
+extern "C" let puts(s: *u8): i32;
+let call(): i32 = id[i32](1);
+---
+
+(source_file
+  (open_decl
+    (module_path
+      (uidentifier)))
+  (let_decl
+    name: (identifier)
+    (type_params
+      (identifier))
+    parameters: (parameters
+      (param
+        (identifier)
+        (type_path
+          (identifier))))
+    type: (type_path
+      (identifier))
+    value: (identifier))
+  (var_decl
+    name: (identifier)
+    type: (type_path
+      (identifier))
+    value: (literal
+      (integer)))
+  (type_decl
+    name: (identifier)
+    (type_params
+      (identifier))
+    body: (variant_type
+      (ctor_decl
+        (uidentifier))
+      (ctor_decl
+        (uidentifier)
+        (type_path
+          (identifier)))))
+  (extern_decl
+    abi: (string)
+    name: (identifier)
+    parameters: (parameters
+      (param
+        (identifier)
+        (pointer_type
+          type: (type_path
+            (identifier)))))
+    type: (type_path
+      (identifier)))
+  (let_decl
+    name: (identifier)
+    parameters: (parameters)
+    type: (type_path
+      (identifier))
+    value: (call_expression
+      function: (identifier)
+      (type_arguments
+        (type_path
+          (identifier)))
+      (literal
+        (integer)))))

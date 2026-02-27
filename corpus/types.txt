@@ -1,0 +1,18 @@
+=== records_variants_and_types ===
+type point = { x: i32; y: i32 };
+type expr = Lit(i32) | Add { lhs: *expr; rhs: *expr };
+type alias = point;
+type arr = [i32; 4];
+type fun = fn(i32, i32) -> i32;
+---
+(source_file
+  (type_decl name: (identifier) body: (record_type (field_type (identifier) (type (identifier))) (field_type (identifier) (type (identifier)))))
+  (type_decl name: (identifier) body: (variant_type
+    (ctor_decl (uidentifier (type (identifier))))
+    (ctor_decl (uidentifier (record_type
+      (field_type (identifier) (type (pointer_type (type (identifier)))))
+      (field_type (identifier) (type (pointer_type (type (identifier))))))))))
+  (type_decl name: (identifier) body: (type (identifier)))
+  (type_decl name: (identifier) body: (type (array_type (type (identifier)) (integer))))
+  (type_decl name: (identifier) body: (type (function_type (type (identifier)) (type (identifier)) (type (identifier))))))
+

@@ -1,0 +1,51 @@
+==================
+tuple_types_and_exprs
+==================
+type t = (i32, bool, f64);
+let mk(): (i32, bool) = (1, true);
+let fst[p, q](x: (p, q)): p = match x with | (a, _) -> a;
+---
+
+(source_file
+  (type_decl
+    name: (identifier)
+    body: (tuple_type
+      (type_path
+        (identifier))
+      (type_path
+        (identifier))
+      (type_path
+        (identifier))))
+  (let_decl
+    name: (identifier)
+    parameters: (parameters)
+    type: (tuple_type
+      (type_path
+        (identifier))
+      (type_path
+        (identifier)))
+    value: (tuple_expression
+      (literal
+        (integer))
+      (literal
+        (true))))
+  (let_decl
+    name: (identifier)
+    (type_params
+      (identifier)
+      (identifier))
+    parameters: (parameters
+      (param
+        (identifier)
+        (tuple_type
+          (type_path
+            (identifier))
+          (type_path
+            (identifier)))))
+    type: (type_path
+      (identifier))
+    value: (match_expression
+      scrutinee: (identifier)
+      pattern: (tuple_pattern
+        (identifier))
+      body: (identifier))))

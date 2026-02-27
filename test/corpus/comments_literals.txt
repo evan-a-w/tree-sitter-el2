@@ -1,0 +1,60 @@
+==================
+comments_literals_numeric_bases
+==================
+/* leading block */
+let nums(): i32 = {
+  // hex, oct, bin, char, bool
+  var a: i32 = 0x2A;
+  var b: i32 = 0o52;
+  var c: i32 = 0b101010;
+  var d: char = 'a';
+  if false then { 0 } else { 1 };
+  0
+};
+---
+
+(source_file
+  (block_comment)
+  (let_decl
+    (identifier)
+    (parameters)
+    (type_path
+      (identifier))
+    (block
+      (comment)
+      (statement
+        (identifier)
+        (type_path
+          (identifier))
+        (literal
+          (integer)))
+      (statement
+        (identifier)
+        (type_path
+          (identifier))
+        (literal
+          (integer)))
+      (statement
+        (identifier)
+        (type_path
+          (identifier))
+        (literal
+          (integer)))
+      (statement
+        (identifier)
+        (type_path
+          (identifier))
+        (literal
+          (char)))
+      (statement
+        (if_expression
+          (literal
+            (false))
+          (block
+            (literal
+              (integer)))
+          (block
+            (literal
+              (integer)))))
+      (literal
+        (integer)))))

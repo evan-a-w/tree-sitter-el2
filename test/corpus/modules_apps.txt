@@ -1,0 +1,88 @@
+==================
+module_alias_and_application
+==================
+module IntOrd = struct
+  type t = i32;
+  let compare(x: i32, y: i32): i32 = i32_sub(x, y);
+end;
+
+module type ORD = sig
+  type t
+  let compare(x: t, y: t): i32
+end;
+
+module MakeSet (O: ORD) = struct end;
+module ISet = MakeSet(IntOrd);
+module Alias = IntOrd;
+module Deep = A.B;
+---
+
+(source_file
+  (module_decl
+    name: (uidentifier)
+    modexpr: (module_expr
+      (type_decl
+        name: (identifier)
+        body: (type_path
+          (identifier)))
+      (let_decl
+        name: (identifier)
+        parameters: (parameters
+          (param
+            (identifier)
+            (type_path
+              (identifier)))
+          (param
+            (identifier)
+            (type_path
+              (identifier))))
+        type: (type_path
+          (identifier))
+        value: (call_expression
+          function: (identifier)
+          (identifier)
+          (identifier)))))
+  (module_type_decl
+    name: (uidentifier)
+    (sig_item
+      (type_sig
+        (identifier)))
+    (sig_item
+      (let_sig
+        (identifier)
+        (parameters
+          (param
+            (identifier)
+            (type_path
+              (identifier)))
+          (param
+            (identifier)
+            (type_path
+              (identifier))))
+        (type_path
+          (identifier)))))
+  (functor_decl
+    name: (uidentifier)
+    arg_name: (uidentifier)
+    arg_sig: (modtype
+      (module_path
+        (uidentifier))))
+  (module_decl
+    name: (uidentifier)
+    modexpr: (module_expr
+      (module_application
+        functor: (module_path
+          (uidentifier))
+        arg: (module_path
+          (uidentifier)))))
+  (module_decl
+    name: (uidentifier)
+    modexpr: (module_expr
+      (module_path
+        (uidentifier))))
+  (module_decl
+    name: (uidentifier)
+    modexpr: (module_expr
+      (module_path
+        (uidentifier)
+        (uidentifier)))))

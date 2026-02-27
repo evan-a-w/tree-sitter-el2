@@ -1,0 +1,45 @@
+==================
+function_array_and_nested_pointer_types
+==================
+type transform = fn(i32, *i32) -> [i32; 0x10];
+let mk(f: transform): transform = f;
+let ptrs(x: **i32): *i32 = *x;
+---
+
+(source_file
+  (type_decl
+    (identifier)
+    (function_type
+      (type_path
+        (identifier))
+      (pointer_type
+        (type_path
+          (identifier)))
+      (array_type
+        (type_path
+          (identifier))
+        (integer))))
+  (let_decl
+    (identifier)
+    (parameters
+      (param
+        (identifier)
+        (type_path
+          (identifier))))
+    (type_path
+      (identifier))
+    (identifier))
+  (let_decl
+    (identifier)
+    (parameters
+      (param
+        (identifier)
+        (pointer_type
+          (pointer_type
+            (type_path
+              (identifier))))))
+    (pointer_type
+      (type_path
+        (identifier)))
+    (unary_expression
+      (identifier))))

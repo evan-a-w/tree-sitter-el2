@@ -1,0 +1,35 @@
+=== modules_functors_and_let_open ===
+module M = struct
+  open N;
+  let f(x: i32): i32 = x;
+end;
+
+module type S = sig
+  type t
+  let f(x: i32): i32
+end;
+
+module F (X: S) = struct
+  let g(x: i32): i32 = x;
+end;
+
+let open M;
+let use(): i32 = f(1);
+let t(): i32 = M.( 1 + 2 );
+---
+(source_file
+  (module_decl name: (uidentifier) modexpr: (module_expr
+    (open_decl (uidentifier))
+    (let_decl name: (identifier) (parameters (param (identifier) ":" (type (identifier)))) ":" (type (identifier)) value: (identifier))))
+  (module_type_decl
+    name: (uidentifier)
+    (type_sig (identifier))
+    (let_sig (identifier) (parameters (param (identifier) ":" (type (identifier)))) ":" (type (identifier))))
+  (functor_decl
+    name: (uidentifier)
+    arg_name: (uidentifier)
+    arg_sig: (uidentifier)
+    (let_decl name: (identifier) (parameters (param (identifier) ":" (type (identifier)))) ":" (type (identifier)) value: (identifier)))
+  (let_open_decl (uidentifier))
+  (let_decl name: (identifier) (parameters) ":" (type (identifier)) value: (call_expression function: (identifier) (integer)))
+  (let_decl name: (identifier) (parameters) ":" (type (identifier)) value: (scoped_open_expression (binary_expression (integer) (integer)))))

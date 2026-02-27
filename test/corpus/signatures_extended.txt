@@ -1,0 +1,59 @@
+==================
+nested_signatures_and_functor_result
+==================
+module type S = sig
+  module M : sig
+    let id(x: i32): i32;
+  end;
+end;
+
+module F(X: S) : S = struct
+  module M : sig
+    let id(x: i32): i32;
+  end = X.M;
+end;
+---
+
+(source_file
+  (module_type_decl
+    (uidentifier)
+    (sig_item
+      (module_sig
+        (uidentifier)
+        (modtype
+          (sig_item
+            (let_sig
+              (identifier)
+              (parameters
+                (param
+                  (identifier)
+                  (type_path
+                    (identifier))))
+              (type_path
+                (identifier))))))))
+  (functor_decl
+    (uidentifier)
+    (uidentifier)
+    (modtype
+      (module_path
+        (uidentifier)))
+    (modtype
+      (module_path
+        (uidentifier)))
+    (module_decl
+      (uidentifier)
+      (modtype
+        (sig_item
+          (let_sig
+            (identifier)
+            (parameters
+              (param
+                (identifier)
+                (type_path
+                  (identifier))))
+            (type_path
+              (identifier)))))
+      (module_expr
+        (module_path
+          (uidentifier)
+          (uidentifier))))))

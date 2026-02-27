@@ -1,0 +1,49 @@
+=== if_match_loop_block_record ===
+let eval(e: *expr): i32 = match *e with
+  | Lit(n) -> n
+  | Add { lhs; rhs } -> i32_add(eval(lhs), eval(rhs));
+
+let p(): point = { x = 1; y = 2 };
+
+let r(): i32 = { var a: i32 = 1; a };
+
+let find_even(xs: *i32, n: i32): i32 =
+  loop {
+    var i: i32 = 0;
+    if i32_equal(i, n) then { break(-1); } else { 0 };
+    let v: i32 = 0;
+    break(v);
+  };
+---
+(source_file
+  (let_decl
+    name: (identifier)
+    (parameters (param (identifier) ":" (type (pointer_type (type (identifier))))))
+    ":" (type (identifier))
+    value: (match_expression
+      scrutinee: (unary_expression (identifier))
+      (pattern (constructor_pattern (uidentifier (pattern (identifier))))) (identifier)
+      (pattern (constructor_pattern (uidentifier (record_pattern (pat_field (identifier)) (pat_field (identifier))))))
+      (call_expression function: (identifier) (call_expression function: (identifier) (identifier)) (call_expression function: (identifier) (identifier)))))
+  (let_decl
+    name: (identifier)
+    (parameters)
+    ":" (type (identifier))
+    value: (record_literal (field_init (identifier) (integer)) (field_init (identifier) (integer))))
+  (let_decl
+    name: (identifier)
+    (parameters)
+    ":" (type (identifier))
+    value: (block
+      (var_decl name: (identifier) ":" (type (identifier)) value: (integer))
+      (identifier)))
+  (let_decl
+    name: (identifier)
+    (parameters (param (identifier) ":" (type (pointer_type (type (identifier))))) (param (identifier) ":" (type (identifier))))
+    ":" (type (identifier))
+    value: (loop_expression
+      (block
+        (var_decl name: (identifier) ":" (type (identifier)) value: (integer))
+        (if_expression (call_expression function: (identifier) (identifier) (identifier)) (block (break_stmt (integer))) (block (integer)))
+        (let_decl name: (identifier) (parameters) ":" (type (identifier)) value: (integer))
+        (break_stmt (identifier))))))

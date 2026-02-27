@@ -1,0 +1,13 @@
+=== patterns_tuple_record_variant_wildcard ===
+type pair[a, b] = Pair(a, b);
+type expr = Lit(i32) | Add { lhs: i32; rhs: i32 };
+let use_pair(p: pair[i32, bool]): i32 = match p with | Pair(x, _) -> x;
+let use_record(e: expr): i32 = match e with | Add { lhs; rhs = r } -> i32_add(lhs, r) | _ -> 0;
+---
+(source_file
+  (type_decl name: (identifier) (type_params (identifier) (identifier)) body: (variant_type (ctor_decl (uidentifier (type (identifier))))) )
+  (type_decl name: (identifier) body: (variant_type (ctor_decl (uidentifier (type (identifier)))) (ctor_decl (uidentifier (record_type (field_type (identifier) (type (identifier))) (field_type (identifier) (type (identifier))))))))
+  (let_decl name: (identifier) (parameters (param (identifier) ":" (type (type_application head: (identifier) targs: (type_arguments (type (identifier)) (type (identifier))))))) ":" (type (identifier)) value: (match_expression scrutinee: (identifier) (pattern (constructor_pattern (uidentifier (tuple_pattern (pattern (identifier)) (pattern (identifier)))))) (identifier)))
+  (let_decl name: (identifier) (parameters (param (identifier) ":" (type (identifier)))) ":" (type (identifier)) value: (match_expression scrutinee: (identifier) (pattern (constructor_pattern (uidentifier (record_pattern (pat_field (identifier)) (pat_field (identifier (pattern (identifier))))))) (call_expression function: (identifier) (identifier) (identifier))) (pattern (_)) (integer)))
+)
+

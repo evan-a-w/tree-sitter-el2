@@ -1,0 +1,96 @@
+==================
+mixed_operator_precedence
+==================
+let p(a: i32, b: i32, c: i32): i32 = a + b * c - (a / b % c);
+let q(x: i32, y: i32): i32 = if x < y || x == y && x >= 0 then { 1 } else { 0 };
+let r(x: i32, y: i32, z: i32): i32 = (x & y) | (x ^ z);
+---
+
+(source_file
+  (let_decl
+    (identifier)
+    (parameters
+      (param
+        (identifier)
+        (type_path
+          (identifier)))
+      (param
+        (identifier)
+        (type_path
+          (identifier)))
+      (param
+        (identifier)
+        (type_path
+          (identifier))))
+    (type_path
+      (identifier))
+    (binary_expression
+      (binary_expression
+        (identifier)
+        (identifier))
+      (binary_expression
+        (identifier)
+        (parenthesized_expression
+          (binary_expression
+            (binary_expression
+              (identifier)
+              (identifier))
+            (identifier))))))
+  (let_decl
+    (identifier)
+    (parameters
+      (param
+        (identifier)
+        (type_path
+          (identifier)))
+      (param
+        (identifier)
+        (type_path
+          (identifier))))
+    (type_path
+      (identifier))
+    (if_expression
+      (binary_expression
+        (binary_expression
+          (identifier)
+          (binary_expression
+            (binary_expression
+              (identifier)
+              (identifier))
+            (binary_expression
+              (identifier)
+              (identifier))))
+        (literal
+          (integer)))
+      (block
+        (literal
+          (integer)))
+      (block
+        (literal
+          (integer)))))
+  (let_decl
+    (identifier)
+    (parameters
+      (param
+        (identifier)
+        (type_path
+          (identifier)))
+      (param
+        (identifier)
+        (type_path
+          (identifier)))
+      (param
+        (identifier)
+        (type_path
+          (identifier))))
+    (type_path
+      (identifier))
+    (binary_expression
+      (parenthesized_expression
+        (binary_expression
+          (identifier)
+          (identifier)))
+      (parenthesized_expression
+        (binary_expression
+          (identifier)
+          (identifier))))))

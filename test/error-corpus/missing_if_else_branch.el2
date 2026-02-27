@@ -1,0 +1,1 @@
+let bad2(): i32 = if true then { 1 };

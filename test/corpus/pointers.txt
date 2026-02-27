@@ -1,0 +1,80 @@
+==================
+pointer_lvalues_and_unsafe
+==================
+let store(p: *i32): unit = { *p := 42; };
+let addr(x: i32): *i32 = &x;
+let mutate_point(p: *point): unit = {
+  (*p).x := 3;
+};
+let null_ok(p: *i32): bool = ptr_equal[i32](p, null);
+---
+
+(source_file
+  (let_decl
+    name: (identifier)
+    parameters: (parameters
+      (param
+        (identifier)
+        (pointer_type
+          type: (type_path
+            (identifier)))))
+    type: (type_path
+      (identifier))
+    value: (block
+      (statement
+        (assign_stmt
+          (lvalue
+            (identifier))
+          (literal
+            (integer))))))
+  (let_decl
+    name: (identifier)
+    parameters: (parameters
+      (param
+        (identifier)
+        (type_path
+          (identifier))))
+    type: (pointer_type
+      type: (type_path
+        (identifier)))
+    value: (unary_expression
+      (identifier)))
+  (let_decl
+    name: (identifier)
+    parameters: (parameters
+      (param
+        (identifier)
+        (pointer_type
+          type: (type_path
+            (identifier)))))
+    type: (type_path
+      (identifier))
+    value: (block
+      (statement
+        (assign_stmt
+          (lvalue
+            (field_expression
+              object: (parenthesized_expression
+                (unary_expression
+                  (identifier)))
+              field: (identifier)))
+          (literal
+            (integer))))))
+  (let_decl
+    name: (identifier)
+    parameters: (parameters
+      (param
+        (identifier)
+        (pointer_type
+          type: (type_path
+            (identifier)))))
+    type: (type_path
+      (identifier))
+    value: (call_expression
+      function: (identifier)
+      (type_arguments
+        (type_path
+          (identifier)))
+      (identifier)
+      (literal
+        (null)))))

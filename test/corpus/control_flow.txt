@@ -1,0 +1,54 @@
+==================
+continue_return_in_blocks
+==================
+let f(n: i32): i32 = loop {
+  if n == 0 then { continue; } else { 0 };
+  break(1);
+};
+
+let g(): i32 = {
+  return 42;
+  0
+};
+---
+
+(source_file
+  (let_decl
+    (identifier)
+    (parameters
+      (param
+        (identifier)
+        (type_path
+          (identifier))))
+    (type_path
+      (identifier))
+    (loop_expression
+      (block
+        (statement
+          (if_expression
+            (binary_expression
+              (identifier)
+              (literal
+                (integer)))
+            (block
+              (statement
+                (continue_stmt)))
+            (block
+              (literal
+                (integer)))))
+        (statement
+          (break_stmt
+            (literal
+              (integer)))))))
+  (let_decl
+    (identifier)
+    (parameters)
+    (type_path
+      (identifier))
+    (block
+      (statement
+        (return_stmt
+          (literal
+            (integer))))
+      (literal
+        (integer)))))
