@@ -6,7 +6,7 @@
 #pragma GCC diagnostic ignored "-Wmissing-field-initializers"
 #endif
 
-#define LANGUAGE_VERSION 14
+#define LANGUAGE_VERSION 15
 #define STATE_COUNT 427
 #define LARGE_STATE_COUNT 2
 #define SYMBOL_COUNT 146
@@ -17,7 +17,7 @@
 #define MAX_ALIAS_SEQUENCE_LENGTH 13
 #define MAX_RESERVED_WORD_SET_SIZE 0
 #define PRODUCTION_ID_COUNT 24
-#define SUPERTYPE_COUNT 0
+#define SUPERTYPE_COUNT 4
 
 enum ts_symbol_identifiers {
   sym_identifier = 1,
@@ -1665,6 +1665,66 @@ static const TSStateId ts_primary_state_ids[STATE_COUNT] = {
   [426] = 426,
 };
 
+static const TSSymbol ts_supertype_symbols[SUPERTYPE_COUNT] = {
+  sym_declaration,
+  sym_expression,
+  sym_pattern,
+  sym_type,
+};
+
+static const TSMapSlice ts_supertype_map_slices[] = {
+  [sym_declaration] = {.index = 0, .length = 9},
+  [sym_expression] = {.index = 9, .length = 18},
+  [sym_pattern] = {.index = 27, .length = 6},
+  [sym_type] = {.index = 33, .length = 6},
+};
+
+static const TSSymbol ts_supertype_map_entries[] = {
+  [0] =
+    sym_extern_decl,
+    sym_functor_decl,
+    sym_let_decl,
+    sym_let_open_decl,
+    sym_module_decl,
+    sym_module_type_decl,
+    sym_open_decl,
+    sym_type_decl,
+    sym_var_decl,
+  [9] =
+    alias_sym_qualified_value,
+    sym_binary_expression,
+    sym_block,
+    sym_call_expression,
+    sym_constructor_expression,
+    sym_field_expression,
+    sym_identifier,
+    sym_if_expression,
+    sym_literal,
+    sym_loop_expression,
+    sym_match_expression,
+    sym_operator_name,
+    sym_parenthesized_expression,
+    sym_record_literal,
+    sym_scoped_open_expression,
+    sym_tuple_expression,
+    sym_unary_expression,
+    sym_unsafe_block,
+  [27] =
+    anon_sym__,
+    sym_constructor_pattern,
+    sym_identifier,
+    sym_literal,
+    sym_record_pattern,
+    sym_tuple_pattern,
+  [33] =
+    sym_array_type,
+    sym_function_type,
+    sym_pointer_type,
+    sym_record_type,
+    sym_tuple_type,
+    sym_type_path,
+};
+
 static const TSCharacterRange sym_operator_identifier_character_set_1[] = {
   {'!', '!'}, {'$', '&'}, {'*', '+'}, {'-', '/'}, {':', ':'}, {'<', '@'}, {'^', '^'}, {'|', '|'},
   {'~', '~'},
@@ -2553,7 +2613,7 @@ static bool ts_lex_keywords(TSLexer *lexer, TSStateId state) {
   }
 }
 
-static const TSLexMode ts_lex_modes[STATE_COUNT] = {
+static const TSLexerMode ts_lex_modes[STATE_COUNT] = {
   [0] = {.lex_state = 0},
   [1] = {.lex_state = 0},
   [2] = {.lex_state = 1},
@@ -13900,6 +13960,7 @@ TS_PUBLIC const TSLanguage *tree_sitter_el2(void) {
     .state_count = STATE_COUNT,
     .large_state_count = LARGE_STATE_COUNT,
     .production_id_count = PRODUCTION_ID_COUNT,
+    .supertype_count = SUPERTYPE_COUNT,
     .field_count = FIELD_COUNT,
     .max_alias_sequence_length = MAX_ALIAS_SEQUENCE_LENGTH,
     .parse_table = &ts_parse_table[0][0],
@@ -13910,6 +13971,9 @@ TS_PUBLIC const TSLanguage *tree_sitter_el2(void) {
     .field_names = ts_field_names,
     .field_map_slices = ts_field_map_slices,
     .field_map_entries = ts_field_map_entries,
+    .supertype_map_slices = ts_supertype_map_slices,
+    .supertype_map_entries = ts_supertype_map_entries,
+    .supertype_symbols = ts_supertype_symbols,
     .symbol_metadata = ts_symbol_metadata,
     .public_symbol_map = ts_symbol_map,
     .alias_map = ts_non_terminal_alias_map,
@@ -13919,6 +13983,13 @@ TS_PUBLIC const TSLanguage *tree_sitter_el2(void) {
     .keyword_lex_fn = ts_lex_keywords,
     .keyword_capture_token = sym_identifier,
     .primary_state_ids = ts_primary_state_ids,
+    .name = "el2",
+    .max_reserved_word_set_size = 0,
+    .metadata = {
+      .major_version = 0,
+      .minor_version = 1,
+      .patch_version = 0,
+    },
   };
   return &language;
 }
