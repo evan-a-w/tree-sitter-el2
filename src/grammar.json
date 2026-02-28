@@ -1,5 +1,4 @@
 {
-  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "el2",
   "word": "identifier",
   "rules": {
@@ -3231,6 +3230,6 @@
     "expression",
     "type",
     "pattern"
-  ],
-  "reserved": {}
+  ]
 }
+
