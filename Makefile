@@ -6,6 +6,7 @@ VERSION := 0.1.0
 SRC_DIR := src
 
 TS ?= tree-sitter
+TS_ABI_VERSION ?= 14
 
 # install directory layout
 PREFIX ?= /usr/local
@@ -76,7 +77,7 @@ $(SRC_DIR)/grammar.json: grammar.js
 	$(TS) generate --no-parser $^
 
 $(PARSER): $(SRC_DIR)/grammar.json
-	$(TS) generate $^
+	$(TS) generate --abi=$(TS_ABI_VERSION) $^
 
 install: all
 	install -d '$(DESTDIR)$(DATADIR)'/tree-sitter/queries/el2 '$(DESTDIR)$(INCLUDEDIR)'/tree_sitter '$(DESTDIR)$(PCLIBDIR)' '$(DESTDIR)$(LIBDIR)'
