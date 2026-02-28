@@ -24,7 +24,7 @@ File mapping
 - Interface: `*.eli` (controls visibility; all items are otherwise public).
 
 Using
-- Install the Tree-sitter CLI, then from this directory run:
+- Install Tree-sitter CLI `0.20.x` (required for ABI 14-compatible generated sources), then from this directory run:
   - `tree-sitter generate --abi 14`
   - `tree-sitter test` (runs files in `corpus/`)
      - $ XDG_CACHE_HOME=/tmp tree-sitter generate --abi 14 && XDG_CACHE_HOME=/tmp tree-sitter test && XDG_CACHE_HOME=/tmp ./test/error-corpus/verify-errors.sh

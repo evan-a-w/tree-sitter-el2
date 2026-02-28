@@ -18,6 +18,19 @@ endif()
 include(GNUInstallDirs)
 
 find_program(TREE_SITTER_CLI tree-sitter DOC "Tree-sitter CLI")
+if(NOT TREE_SITTER_CLI)
+  message(FATAL_ERROR "Tree-sitter CLI not found")
+endif()
+
+execute_process(
+  COMMAND "${TREE_SITTER_CLI}" --version
+  OUTPUT_VARIABLE TREE_SITTER_CLI_VERSION_TEXT
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+string(REGEX MATCH "([0-9]+\\.[0-9]+\\.[0-9]+)" TREE_SITTER_CLI_VERSION "${TREE_SITTER_CLI_VERSION_TEXT}")
+if(NOT TREE_SITTER_CLI_VERSION MATCHES "^0\\.20\\.")
+  message(FATAL_ERROR "Tree-sitter CLI 0.20.x is required to generate ABI 14-compatible sources. Found: ${TREE_SITTER_CLI_VERSION_TEXT}")
+endif()
 
 add_custom_command(OUTPUT "${CMAKE_CURRENT_SOURCE_DIR}/src/grammar.json"
                           "${CMAKE_CURRENT_SOURCE_DIR}/src/node-types.json"

@@ -7,6 +7,7 @@ SRC_DIR := src
 
 TS ?= tree-sitter
 TS_ABI_VERSION ?= 14
+TS_REQUIRED_VERSION_REGEX ?= 0\.20\.
 
 # install directory layout
 PREFIX ?= /usr/local
@@ -73,11 +74,17 @@ $(LANGUAGE_NAME).pc: bindings/c/$(LANGUAGE_NAME).pc.in
 		-e 's|@PROJECT_HOMEPAGE_URL@|$(HOMEPAGE_URL)|' \
 		-e 's|@CMAKE_INSTALL_PREFIX@|$(PREFIX)|' $< > $@
 
-$(SRC_DIR)/grammar.json: grammar.js
-	$(TS) generate --no-parser $^
+check-ts-cli-version:
+	@$(TS) --version | grep -Eq '^tree-sitter $(TS_REQUIRED_VERSION_REGEX)' || \
+		{ echo "error: tree-sitter CLI 0.20.x is required to generate ABI 14-compatible sources"; \
+		  echo "       found: $$($(TS) --version)"; \
+		  exit 1; }
 
-$(PARSER): $(SRC_DIR)/grammar.json
-	$(TS) generate --abi=$(TS_ABI_VERSION) $^
+$(SRC_DIR)/grammar.json: check-ts-cli-version grammar.js
+	$(TS) generate --no-parser grammar.js
+
+$(PARSER): check-ts-cli-version $(SRC_DIR)/grammar.json
+	$(TS) generate --abi=$(TS_ABI_VERSION) $(SRC_DIR)/grammar.json
 
 install: all
 	install -d '$(DESTDIR)$(DATADIR)'/tree-sitter/queries/el2 '$(DESTDIR)$(INCLUDEDIR)'/tree_sitter '$(DESTDIR)$(PCLIBDIR)' '$(DESTDIR)$(LIBDIR)'
@@ -113,4 +120,4 @@ clean:
 test:
 	$(TS) test
 
-.PHONY: all install uninstall clean test
+.PHONY: all install uninstall clean test check-ts-cli-version
