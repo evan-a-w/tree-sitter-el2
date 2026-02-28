@@ -347,7 +347,10 @@ module.exports = grammar({
 
     // Module paths
     module_path: $ => prec.right(seq($.uidentifier, repeat(seq('.', $.uidentifier)))),
-    module_value_path: $ => seq($.module_path, '.', $.identifier),
+    module_value_path: $ => choice(
+      seq($.uidentifier, '.', $.identifier),
+      seq($.uidentifier, repeat1(seq('.', $.uidentifier)), '.', $.identifier),
+    ),
 
     // Literals wrapper
     literal: $ => choice($.float, $.integer, $.char, $.string, $.true, $.false, $.null),
