@@ -27,6 +27,7 @@ module.exports = grammar({
     [$.type_application, $.array_type],
     [$.module_path, $.type_path],
     [$.module_path, $.module_value_path],
+    [$.constructor_expression, $.module_value_path],
     [$.if_expression, $.binary_expression],
     [$.match_expression, $.binary_expression],
   ],
@@ -347,10 +348,13 @@ module.exports = grammar({
 
     // Module paths
     module_path: $ => prec.right(seq($.uidentifier, repeat(seq('.', $.uidentifier)))),
-    module_value_path: $ => choice(
-      seq($.uidentifier, '.', $.identifier),
-      seq($.uidentifier, repeat1(seq('.', $.uidentifier)), '.', $.identifier),
-    ),
+    //module_value_path: $ => choice(
+    // seq($.uidentifier, '.', $.identifier),
+    //  seq($.uidentifier, repeat1(seq('.', $.uidentifier)), '.', $.identifier),
+    //),
+    // Parse qualified value refs without relying on module_path to avoid
+    // the A.<id> ambiguity with module_path's own dotted repetition.
+    module_value_path: $ => prec('member', seq($.uidentifier, repeat(seq('.', $.uidentifier)), '.', $.identifier)),
 
     // Literals wrapper
     literal: $ => choice($.float, $.integer, $.char, $.string, $.true, $.false, $.null),
